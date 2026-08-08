@@ -1,0 +1,559 @@
+{
+  "config": {
+    "dataset_prefix": "/path/to/dataset_prefix",
+    "targets": {
+      "Czechia_EBA_CordedWare:I6695.AG": [
+        "I6695.AG"
+      ],
+      "Czechia_EBA_CordedWare:I6696.AG": [
+        "I6696.AG"
+      ],
+      "Czechia_EBA_CordedWare:I7207.AG": [
+        "I7207.AG"
+      ],
+      "Czechia_EBA_CordedWare:I7208.AG": [
+        "I7208.AG"
+      ],
+      "Czechia_EBA_CordedWare:I7209.AG": [
+        "I7209.AG"
+      ],
+      "Czechia_EBA_CordedWare:I7279.AG": [
+        "I7279.AG"
+      ],
+      "Czechia_EBA_CordedWare:I7280.AG": [
+        "I7280.AG"
+      ],
+      "Czechia_EBA_CordedWare:CAH005.AG": [
+        "CAH005.AG"
+      ],
+      "Czechia_EBA_CordedWare:CAH010.AG": [
+        "CAH010.AG"
+      ],
+      "Czechia_EBA_CordedWare:DRO001.AG": [
+        "DRO001.AG"
+      ],
+      "Czechia_EBA_CordedWare:KO1002.AG": [
+        "KO1002.AG"
+      ],
+      "Czechia_EBA_CordedWare:KON004.AG": [
+        "KON004.AG"
+      ],
+      "Czechia_EBA_CordedWare:OHR002.AG": [
+        "OHR002.AG"
+      ],
+      "Czechia_EBA_CordedWare:PNL001.AG": [
+        "PNL001.AG"
+      ],
+      "Czechia_EBA_CordedWare:PNL002.AG": [
+        "PNL002.AG"
+      ],
+      "Czechia_EBA_CordedWare:RDV001.AG": [
+        "RDV001.AG"
+      ],
+      "Czechia_EBA_CordedWare:TRM003.AG": [
+        "TRM003.AG"
+      ],
+      "Czechia_EBA_CordedWare:TRM006.AG": [
+        "TRM006.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI007.AG": [
+        "VLI007.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI010.AG": [
+        "VLI010.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI011.AG": [
+        "VLI011.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI016.AG": [
+        "VLI016.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI017.AG": [
+        "VLI017.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI020.AG": [
+        "VLI020.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI067.AG": [
+        "VLI067.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI071.AG": [
+        "VLI071.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI076.AG": [
+        "VLI076.AG"
+      ],
+      "Czechia_EBA_CordedWare:VLI092.AG": [
+        "VLI092.AG"
+      ],
+      "Sardinian:HGDP00666.HO": [
+        "HGDP00666.HO"
+      ],
+      "Sardinian:HGDP00667.HO": [
+        "HGDP00667.HO"
+      ],
+      "Sardinian:HGDP00668.HO": [
+        "HGDP00668.HO"
+      ],
+      "Sardinian:HGDP00669.HO": [
+        "HGDP00669.HO"
+      ],
+      "Sardinian:HGDP00670.HO": [
+        "HGDP00670.HO"
+      ],
+      "Sardinian:HGDP00671.HO": [
+        "HGDP00671.HO"
+      ],
+      "Sardinian:HGDP00672.HO": [
+        "HGDP00672.HO"
+      ],
+      "Sardinian:HGDP00673.HO": [
+        "HGDP00673.HO"
+      ],
+      "Sardinian:HGDP00674.HO": [
+        "HGDP00674.HO"
+      ],
+      "Orcadian:HGDP00794.HO": [
+        "HGDP00794.HO"
+      ],
+      "Orcadian:HGDP00796.HO": [
+        "HGDP00796.HO"
+      ],
+      "Orcadian:HGDP00797.HO": [
+        "HGDP00797.HO"
+      ],
+      "Orcadian:HGDP00798.HO": [
+        "HGDP00798.HO"
+      ],
+      "Orcadian:HGDP00799.HO": [
+        "HGDP00799.HO"
+      ],
+      "Orcadian:HGDP00800.HO": [
+        "HGDP00800.HO"
+      ],
+      "Orcadian:HGDP00802.HO": [
+        "HGDP00802.HO"
+      ],
+      "Orcadian:HGDP00803.HO": [
+        "HGDP00803.HO"
+      ],
+      "Orcadian:HGDP00805.HO": [
+        "HGDP00805.HO"
+      ],
+      "Orcadian:HGDP00806.HO": [
+        "HGDP00806.HO"
+      ],
+      "Orcadian:HGDP00807.HO": [
+        "HGDP00807.HO"
+      ],
+      "Orcadian:HGDP00808.HO": [
+        "HGDP00808.HO"
+      ],
+      "Orcadian:HGDP00810.HO": [
+        "HGDP00810.HO"
+      ],
+      "Sardinian:HGDP01062.HO": [
+        "HGDP01062.HO"
+      ],
+      "Sardinian:HGDP01063.HO": [
+        "HGDP01063.HO"
+      ],
+      "Sardinian:HGDP01064.HO": [
+        "HGDP01064.HO"
+      ],
+      "Sardinian:HGDP01065.HO": [
+        "HGDP01065.HO"
+      ],
+      "Sardinian:HGDP01066.HO": [
+        "HGDP01066.HO"
+      ],
+      "Sardinian:HGDP01067.HO": [
+        "HGDP01067.HO"
+      ],
+      "Sardinian:HGDP01068.HO": [
+        "HGDP01068.HO"
+      ],
+      "Sardinian:HGDP01069.HO": [
+        "HGDP01069.HO"
+      ],
+      "Sardinian:HGDP01070.HO": [
+        "HGDP01070.HO"
+      ],
+      "Sardinian:HGDP01071.HO": [
+        "HGDP01071.HO"
+      ],
+      "Sardinian:HGDP01072.HO": [
+        "HGDP01072.HO"
+      ],
+      "Sardinian:HGDP01073.HO": [
+        "HGDP01073.HO"
+      ],
+      "Sardinian:HGDP01074.HO": [
+        "HGDP01074.HO"
+      ],
+      "Sardinian:HGDP01075.HO": [
+        "HGDP01075.HO"
+      ],
+      "Sardinian:HGDP01076.HO": [
+        "HGDP01076.HO"
+      ],
+      "Sardinian:HGDP01077.HO": [
+        "HGDP01077.HO"
+      ],
+      "Sardinian:HGDP01078.HO": [
+        "HGDP01078.HO"
+      ],
+      "Sardinian:HGDP01079.HO": [
+        "HGDP01079.HO"
+      ],
+      "Icelandic:NA15762.HO": [
+        "NA15762.HO"
+      ],
+      "Greek:NA17373.HO": [
+        "NA17373.HO"
+      ],
+      "Icelandic:NA15755.HO": [
+        "NA15755.HO"
+      ],
+      "Icelandic:NA15763.HO": [
+        "NA15763.HO"
+      ],
+      "Icelandic:NA15756.HO": [
+        "NA15756.HO"
+      ],
+      "Icelandic:NA15764.HO": [
+        "NA15764.HO"
+      ],
+      "Greek:NA17375.HO": [
+        "NA17375.HO"
+      ],
+      "Icelandic:NA15757.HO": [
+        "NA15757.HO"
+      ],
+      "Icelandic:NA15765.HO": [
+        "NA15765.HO"
+      ],
+      "Greek:NA17376.HO": [
+        "NA17376.HO"
+      ],
+      "Icelandic:NA15758.HO": [
+        "NA15758.HO"
+      ],
+      "Icelandic:NA15766.HO": [
+        "NA15766.HO"
+      ],
+      "Icelandic:NA15759.HO": [
+        "NA15759.HO"
+      ],
+      "Icelandic:NA15760.HO": [
+        "NA15760.HO"
+      ],
+      "Icelandic:NA15761.HO": [
+        "NA15761.HO"
+      ],
+      "Greek:NA17372.HO": [
+        "NA17372.HO"
+      ],
+      "Sicilian:TP08.HO": [
+        "TP08.HO"
+      ],
+      "Greek:GREEKGRALPOP18.HO": [
+        "GREEKGRALPOP18.HO"
+      ],
+      "Sicilian:SR23.HO": [
+        "SR23.HO"
+      ],
+      "Sicilian:TP05.HO": [
+        "TP05.HO"
+      ],
+      "Sicilian:SR60.HO": [
+        "SR60.HO"
+      ],
+      "Sicilian:TP06.HO": [
+        "TP06.HO"
+      ],
+      "Greek:GREEKGRALPOP13.HO": [
+        "GREEKGRALPOP13.HO"
+      ],
+      "Sicilian:TP07.HO": [
+        "TP07.HO"
+      ],
+      "Greek:GREEKGRALPOP15.HO": [
+        "GREEKGRALPOP15.HO"
+      ],
+      "Greek:GREEKGRALPOP5.HO": [
+        "GREEKGRALPOP5.HO"
+      ],
+      "Greek:GREEKGRALPOP9.HO": [
+        "GREEKGRALPOP9.HO"
+      ],
+      "Sicilian:TP04.HO": [
+        "TP04.HO"
+      ],
+      "Sicilian:TP25.HO": [
+        "TP25.HO"
+      ],
+      "Greek:GREEKGRALPOP4.HO": [
+        "GREEKGRALPOP4.HO"
+      ],
+      "Sicilian:SR48R.HO": [
+        "SR48R.HO"
+      ],
+      "Sicilian:SR44.HO": [
+        "SR44.HO"
+      ],
+      "Sicilian:SR64.HO": [
+        "SR64.HO"
+      ],
+      "Greek:GREEKGRALPOP17.HO": [
+        "GREEKGRALPOP17.HO"
+      ],
+      "Greek:GREEKGRALPOP16.HO": [
+        "GREEKGRALPOP16.HO"
+      ],
+      "Greek:GREEKGRALPOP11.HO": [
+        "GREEKGRALPOP11.HO"
+      ],
+      "Greek:GREEKGRALPOP10.HO": [
+        "GREEKGRALPOP10.HO"
+      ],
+      "Greek:GREEKGRALPOP3.HO": [
+        "GREEKGRALPOP3.HO"
+      ],
+      "Greek:GREEKGRALPOP8.HO": [
+        "GREEKGRALPOP8.HO"
+      ],
+      "Greek:GREEKGRALPOP12.HO": [
+        "GREEKGRALPOP12.HO"
+      ],
+      "Greek:GREEKGRALPOP14.HO": [
+        "GREEKGRALPOP14.HO"
+      ],
+      "Czechia_EBA_CordedWare:I6696.SG": [
+        "I6696.SG"
+      ],
+      "Sardinian:B_Sardinian-3.DG": [
+        "B_Sardinian-3.DG"
+      ],
+      "Greek:S_Greek-2.DG": [
+        "S_Greek-2.DG"
+      ],
+      "Icelandic:S_Icelandic-1.DG": [
+        "S_Icelandic-1.DG"
+      ],
+      "Icelandic:S_Icelandic-2.DG": [
+        "S_Icelandic-2.DG"
+      ],
+      "Orcadian:S_Orcadian-1.DG": [
+        "S_Orcadian-1.DG"
+      ],
+      "Orcadian:S_Orcadian-2.DG": [
+        "S_Orcadian-2.DG"
+      ],
+      "Sardinian:S_Sardinian-1.DG": [
+        "S_Sardinian-1.DG"
+      ],
+      "Sardinian:S_Sardinian-2.DG": [
+        "S_Sardinian-2.DG"
+      ],
+      "Sardinian:HGDP00665.DG": [
+        "HGDP00665.DG"
+      ],
+      "Sardinian:HGDP00666.DG": [
+        "HGDP00666.DG"
+      ],
+      "Sardinian:HGDP00667.DG": [
+        "HGDP00667.DG"
+      ],
+      "Sardinian:HGDP00668.DG": [
+        "HGDP00668.DG"
+      ],
+      "Sardinian:HGDP00669.DG": [
+        "HGDP00669.DG"
+      ],
+      "Sardinian:HGDP00670.DG": [
+        "HGDP00670.DG"
+      ],
+      "Sardinian:HGDP00671.DG": [
+        "HGDP00671.DG"
+      ],
+      "Sardinian:HGDP00672.DG": [
+        "HGDP00672.DG"
+      ],
+      "Sardinian:HGDP00673.DG": [
+        "HGDP00673.DG"
+      ],
+      "Sardinian:HGDP00674.DG": [
+        "HGDP00674.DG"
+      ],
+      "Orcadian:HGDP00794.DG": [
+        "HGDP00794.DG"
+      ],
+      "Orcadian:HGDP00795.DG": [
+        "HGDP00795.DG"
+      ],
+      "Orcadian:HGDP00796.DG": [
+        "HGDP00796.DG"
+      ],
+      "Orcadian:HGDP00797.DG": [
+        "HGDP00797.DG"
+      ],
+      "Orcadian:HGDP00798.DG": [
+        "HGDP00798.DG"
+      ],
+      "Orcadian:HGDP00799.DG": [
+        "HGDP00799.DG"
+      ],
+      "Orcadian:HGDP00800.DG": [
+        "HGDP00800.DG"
+      ],
+      "Orcadian:HGDP00802.DG": [
+        "HGDP00802.DG"
+      ],
+      "Orcadian:HGDP00803.DG": [
+        "HGDP00803.DG"
+      ],
+      "Orcadian:HGDP00804.DG": [
+        "HGDP00804.DG"
+      ],
+      "Orcadian:HGDP00805.DG": [
+        "HGDP00805.DG"
+      ],
+      "Orcadian:HGDP00806.DG": [
+        "HGDP00806.DG"
+      ],
+      "Orcadian:HGDP00807.DG": [
+        "HGDP00807.DG"
+      ],
+      "Orcadian:HGDP00808.DG": [
+        "HGDP00808.DG"
+      ],
+      "Orcadian:HGDP00810.DG": [
+        "HGDP00810.DG"
+      ],
+      "Sardinian:HGDP01062.DG": [
+        "HGDP01062.DG"
+      ],
+      "Sardinian:HGDP01063.DG": [
+        "HGDP01063.DG"
+      ],
+      "Sardinian:HGDP01064.DG": [
+        "HGDP01064.DG"
+      ],
+      "Sardinian:HGDP01065.DG": [
+        "HGDP01065.DG"
+      ],
+      "Sardinian:HGDP01066.DG": [
+        "HGDP01066.DG"
+      ],
+      "Sardinian:HGDP01067.DG": [
+        "HGDP01067.DG"
+      ],
+      "Sardinian:HGDP01068.DG": [
+        "HGDP01068.DG"
+      ],
+      "Sardinian:HGDP01069.DG": [
+        "HGDP01069.DG"
+      ],
+      "Sardinian:HGDP01070.DG": [
+        "HGDP01070.DG"
+      ],
+      "Sardinian:HGDP01071.DG": [
+        "HGDP01071.DG"
+      ],
+      "Sardinian:HGDP01072.DG": [
+        "HGDP01072.DG"
+      ],
+      "Sardinian:HGDP01073.DG": [
+        "HGDP01073.DG"
+      ],
+      "Sardinian:HGDP01074.DG": [
+        "HGDP01074.DG"
+      ],
+      "Sardinian:HGDP01075.DG": [
+        "HGDP01075.DG"
+      ],
+      "Sardinian:HGDP01076.DG": [
+        "HGDP01076.DG"
+      ],
+      "Sardinian:HGDP01077.DG": [
+        "HGDP01077.DG"
+      ],
+      "Sardinian:HGDP01078.DG": [
+        "HGDP01078.DG"
+      ],
+      "Sardinian:HGDP01079.DG": [
+        "HGDP01079.DG"
+      ]
+    },
+    "component_sources": {
+      "Turkey_Barcin_Neolithic-DG": [
+        "Turkey_Barcin_Neolithic-DG"
+      ],
+      "Russia_Samara_EBA_Yamnaya": [
+        "Russia_Samara_EBA_Yamnaya"
+      ],
+      "Luxembourg_Loschbour_Mesolithic": [
+        "Luxembourg_Loschbour_Mesolithic"
+      ],
+      "Morocco_EN": [
+        "Morocco_EN"
+      ],
+      "Georgia_KotiasKlde_Mesolithic": [
+        "Georgia_KotiasKlde_Mesolithic"
+      ],
+      "Iran_GanjDareh_N": [
+        "Iran_GanjDareh_N"
+      ],
+      "Jordan_PPNB": [
+        "Jordan_PPNB"
+      ]
+    },
+    "right": [
+      "Mbuti",
+      "Switzerland_Epipaleolithic",
+      "Russia_Vologda_Mesolithic",
+      "Ethiopia_MotaCave_4500BP",
+      "Iran_BeltCave_Mesolithic",
+      "Georgia_Satsurblia_LateUP",
+      "Natufian",
+      "Morocco_Iberomaurusian",
+      "Turkey_PPN"
+    ],
+    "outgroup": "Chimp",
+    "blgsize": 0.05,
+    "chunk_size": 250000,
+    "covariance_ridge": 1e-05,
+    "min_effective_f4_snps_warning": 50000,
+    "verbose": true
+  },
+  "source_sample_counts": {
+    "Turkey_Barcin_Neolithic-DG": 2,
+    "Russia_Samara_EBA_Yamnaya": 46,
+    "Luxembourg_Loschbour_Mesolithic": 2,
+    "Morocco_EN": 11,
+    "Georgia_KotiasKlde_Mesolithic": 2,
+    "Iran_GanjDareh_N": 17,
+    "Jordan_PPNB": 17
+  },
+  "features": [
+    "Switzerland_Epipaleolithic",
+    "Russia_Vologda_Mesolithic",
+    "Ethiopia_MotaCave_4500BP",
+    "Iran_BeltCave_Mesolithic",
+    "Georgia_Satsurblia_LateUP",
+    "Natufian",
+    "Morocco_Iberomaurusian",
+    "Turkey_PPN"
+  ],
+  "targets": 161,
+  "sources": [
+    "Turkey_Barcin_Neolithic-DG",
+    "Russia_Samara_EBA_Yamnaya",
+    "Luxembourg_Loschbour_Mesolithic",
+    "Morocco_EN",
+    "Georgia_KotiasKlde_Mesolithic",
+    "Iran_GanjDareh_N",
+    "Jordan_PPNB"
+  ]
+}
