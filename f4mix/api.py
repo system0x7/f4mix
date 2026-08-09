@@ -114,13 +114,38 @@ class F4FitResult:
         for target, fit in self.fits.items():
             effective = fit.effective_f4_snps
             effective_blocks = fit.effective_f4_blocks
-            rows.append(
+            row = {
+                "target": target,
+                "chi_square": fit.chi_square,
+                "residual_norm": float(np.linalg.norm(fit.residual)),
+                "success": fit.success,
+                "iterations": fit.iterations,
+            }
+            for prefix, diagnostics in (
+                ("initial_optimizer", fit.initial_optimizer),
+                ("refinement_optimizer", fit.refinement_optimizer),
+            ):
+                row.update(
+                    {
+                        f"{prefix}_success": (
+                            diagnostics.success if diagnostics is not None else None
+                        ),
+                        f"{prefix}_status": (
+                            diagnostics.status if diagnostics is not None else None
+                        ),
+                        f"{prefix}_message": (
+                            diagnostics.message if diagnostics is not None else None
+                        ),
+                        f"{prefix}_nit": (
+                            diagnostics.nit if diagnostics is not None else None
+                        ),
+                        f"{prefix}_nfev": (
+                            diagnostics.nfev if diagnostics is not None else None
+                        ),
+                    }
+                )
+            row.update(
                 {
-                    "target": target,
-                    "chi_square": fit.chi_square,
-                    "residual_norm": float(np.linalg.norm(fit.residual)),
-                    "success": fit.success,
-                    "iterations": fit.iterations,
                     "target_callable_snps": fit.target_callable_snps,
                     "min_effective_f4_snps": (
                         int(np.min(effective)) if effective is not None else None
@@ -135,6 +160,7 @@ class F4FitResult:
                     ),
                 }
             )
+            rows.append(row)
         return pd.DataFrame(rows)
 
     def save(self, output_directory: str | Path, *, overwrite: bool = False) -> Path:

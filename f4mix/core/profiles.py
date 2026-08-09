@@ -22,6 +22,35 @@ DEFAULT_F4_OUTGROUP = "Chimp"
 
 
 @dataclass(frozen=True)
+class OptimizerDiagnostics:
+    """Serializable diagnostics from one constrained optimizer call."""
+
+    success: bool
+    status: int | None
+    message: str
+    nit: int | None
+    nfev: int | None
+
+    @classmethod
+    def from_result(cls, result: object) -> "OptimizerDiagnostics":
+        return cls(
+            success=bool(getattr(result, "success", False)),
+            status=(
+                int(result.status)
+                if getattr(result, "status", None) is not None
+                else None
+            ),
+            message=str(getattr(result, "message", "")),
+            nit=(int(result.nit) if getattr(result, "nit", None) is not None else None),
+            nfev=(
+                int(result.nfev)
+                if getattr(result, "nfev", None) is not None
+                else None
+            ),
+        )
+
+
+@dataclass(frozen=True)
 class F4ProfileData:
     """Source-minus-target f4 profiles and their joint uncertainty."""
 
@@ -94,6 +123,8 @@ class F4ProfileFit:
     chi_square: float
     iterations: int
     success: bool
+    initial_optimizer: OptimizerDiagnostics | None = None
+    refinement_optimizer: OptimizerDiagnostics | None = None
     target_callable_snps: int | None = None
     effective_f4_snps: np.ndarray | None = None
     effective_f4_blocks: np.ndarray | None = None
@@ -415,7 +446,7 @@ def _solve_weights(
     *,
     group_sums: Mapping[str, tuple[Sequence[str], float]] | None,
     sources: Sequence[str],
-) -> tuple[np.ndarray, bool]:
+) -> tuple[np.ndarray, OptimizerDiagnostics]:
     matrix = np.asarray(matrix, float)
     hessian = matrix @ precision @ matrix.T
     hessian = (hessian + hessian.T) / 2.0
@@ -487,7 +518,7 @@ def _solve_weights(
             weights[indices] = (
                 value / len(indices) if total <= 0 else weights[indices] * value / total
             )
-    return weights, bool(result.success)
+    return weights, OptimizerDiagnostics.from_result(result)
 
 
 def _solve_full_gaussian_weights(
@@ -500,7 +531,7 @@ def _solve_full_gaussian_weights(
     covariance_scale: float,
     group_sums: Mapping[str, tuple[Sequence[str], float]] | None,
     sources: Sequence[str],
-) -> tuple[np.ndarray, bool]:
+) -> tuple[np.ndarray, OptimizerDiagnostics, bool]:
     """Optimize the Gaussian residual likelihood on the source simplex."""
 
     matrix = np.asarray(matrix, float)
@@ -563,7 +594,8 @@ def _solve_full_gaussian_weights(
             weights[indices] = (
                 value / len(indices) if total <= 0 else weights[indices] * value / total
             )
-    return weights, bool(result.success) and np.isfinite(objective(weights))
+    diagnostics = OptimizerDiagnostics.from_result(result)
+    return weights, diagnostics, bool(diagnostics.success and np.isfinite(objective(weights)))
 
 
 def fit_f4_profiles(
@@ -588,18 +620,20 @@ def fit_f4_profiles(
         if profile.fit_covariance is None
         else _regularized_inverse(profile.fit_covariance, covariance_ridge)
     )
-    weights, success = _solve_weights(
+    weights, initial_optimizer = _solve_weights(
         profile.matrix,
         precision,
         group_sums=group_sums,
         sources=profile.sources,
     )
+    success = initial_optimizer.success
+    refinement_optimizer = None
     iterations = 1
     if profile.fit_covariance is not None:
         # Full Gaussian refinement: account for both the residual covariance
         # and its determinant, so noisy source combinations are not rewarded.
         covariance_scale = _covariance_scale(profile.fit_covariance)
-        revised, solved = _solve_full_gaussian_weights(
+        revised, refinement_optimizer, solved = _solve_full_gaussian_weights(
             profile.matrix,
             profile.covariance,
             nfeatures,
@@ -624,13 +658,13 @@ def fit_f4_profiles(
                 profile.covariance, weights, nfeatures
             )
             precision = _regularized_inverse(residual_covariance, covariance_ridge)
-            revised, solved = _solve_weights(
+            revised, refinement_optimizer = _solve_weights(
                 profile.matrix,
                 precision,
                 group_sums=group_sums,
                 sources=profile.sources,
             )
-            success &= solved
+            success &= refinement_optimizer.success
             change = float(np.max(np.abs(revised - weights)))
             weights = revised
             if change <= tolerance:
@@ -645,13 +679,13 @@ def fit_f4_profiles(
             matrix = profile.loo[:, :, block]
             if not np.isfinite(matrix).all():
                 continue
-            fitted, solved = _solve_weights(
+            fitted, jackknife_optimizer = _solve_weights(
                 matrix,
                 precision,
                 group_sums=group_sums,
                 sources=profile.sources,
             )
-            if solved and np.isfinite(fitted).all():
+            if jackknife_optimizer.success and np.isfinite(fitted).all():
                 jackknife_weights.append(fitted)
         if len(jackknife_weights) >= 2:
             values = np.asarray(jackknife_weights, float)
@@ -669,6 +703,8 @@ def fit_f4_profiles(
         chi_square=chi_square,
         iterations=iterations,
         success=success,
+        initial_optimizer=initial_optimizer,
+        refinement_optimizer=refinement_optimizer,
         target_callable_snps=profile.target_callable_snps,
         effective_f4_snps=profile.effective_f4_snps,
         effective_f4_blocks=profile.effective_f4_blocks,

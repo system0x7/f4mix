@@ -134,7 +134,7 @@ automatically; explicit exclusions should be made with
 weights.tsv       fitted weight for each source and target
 weights_se.tsv    block-jackknife standard errors
 weights_z.tsv     weight divided by its standard error
-targets.tsv       fit status, residuals, and SNP coverage
+targets.tsv       fit status, optimizer diagnostics, residuals, and SNP coverage
 run.json          run settings, f4 features, and sample counts
 ```
 
