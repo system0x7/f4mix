@@ -14,6 +14,7 @@ import pandas as pd
 
 from .core.profiles import (
     F4ProfileFit,
+    _helmert_basis,
     build_f4_profiles_for_targets,
     fit_f4_profiles,
 )
@@ -28,6 +29,7 @@ class F4FitConfig:
     component_sources: dict[str, tuple[str, ...]]
     right: tuple[str, ...]
     outgroup: str = "Chimp"
+    feature_builder: str = "pairwise_right_gls"
     blgsize: float = 0.05
     chunk_size: int = 250_000
     covariance_ridge: float = 1e-5
@@ -178,6 +180,10 @@ class F4FitResult:
             "config": self.config.as_jsonable(),
             "source_sample_counts": self.source_sample_counts,
             "features": list(self.features),
+            "feature_basis": {
+                "population_order": list(self.config.right),
+                "matrix": _helmert_basis(len(self.config.right)).tolist(),
+            },
             "targets": len(self.fits),
             "sources": list(self.config.component_sources),
         }
@@ -245,11 +251,19 @@ class F4Model:
         verbose: bool = True,
     ) -> None:
         self.sources = _source_map(sources)
+        if not self.sources:
+            raise ValueError("At least one source component is required")
         self.right = tuple(str(value) for value in right)
+        if len(self.right) < 2:
+            raise ValueError("At least two Right populations are required")
+        if len(set(self.right)) != len(self.right):
+            raise ValueError("Right populations must be unique")
         self.outgroup = str(outgroup)
         self.blgsize = float(blgsize)
         self.chunk_size = int(chunk_size)
         self.covariance_ridge = float(covariance_ridge)
+        if self.covariance_ridge <= 0:
+            raise ValueError("covariance_ridge must be positive")
         if (
             min_effective_f4_snps_warning is not None
             and min_effective_f4_snps_warning <= 0
@@ -275,7 +289,7 @@ class F4Model:
             population: selected.loc[
                 selected["population"].astype(str) == population, "iid"
             ].astype(str).tolist()
-            for population in set(self.right) | {self.outgroup}
+            for population in set(self.right)
         }
         source_iids: list[str] = []
         source_labels: list[str] = []
@@ -308,7 +322,7 @@ class F4Model:
 
         anchor_iids: list[str] = []
         anchor_labels: list[str] = []
-        for population in (self.outgroup, *self.right):
+        for population in self.right:
             iids = population_to_iids.get(population, [])
             if not iids:
                 raise ValueError(f"No selected anchor samples for population {population!r}")
@@ -337,6 +351,7 @@ class F4Model:
             self.right,
             outgroup=self.outgroup,
             blgsize=self.blgsize,
+            covariance_ridge=self.covariance_ridge,
             verbose=self.verbose,
         )
         if self.min_effective_f4_snps_warning is not None:
@@ -348,7 +363,8 @@ class F4Model:
                 if minimum < threshold:
                     warnings.warn(
                         f"{target}: only {minimum:,} effective f4 SNPs "
-                        f"(minimum across {len(profile.features)} f4 features; "
+                        "(minimum across raw source-target and pairwise-Right "
+                        "statistics; "
                         f"warning threshold {threshold:,})",
                         RuntimeWarning,
                         stacklevel=2,
@@ -367,6 +383,7 @@ class F4Model:
             component_sources=self.sources,
             right=self.right,
             outgroup=self.outgroup,
+            feature_builder="pairwise_right_gls",
             blgsize=self.blgsize,
             chunk_size=self.chunk_size,
             covariance_ridge=self.covariance_ridge,

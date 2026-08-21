@@ -19,7 +19,7 @@ import pandas as pd
 
 # --- Configuration for the completed run ---
 SCRIPT_DIRECTORY = Path(__file__).resolve().parent
-RUN_DIRECTORY = SCRIPT_DIRECTORY / "runs" / "example"
+RUN_DIRECTORY = SCRIPT_DIRECTORY / "runs" / "modern"
 WEIGHTS_FILE = RUN_DIRECTORY / "weights.tsv"
 RUN_FILE = RUN_DIRECTORY / "run.json"
 OUTPUT_FILE = RUN_DIRECTORY / "reference_similarity.svg"

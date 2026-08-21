@@ -8,25 +8,38 @@ sample at a time with covariance-aware f4 statistics.
 
 The resulting weights estimate reference similarity.
 
-![F4Mix example plot: sample-wise reference similarities](runs/example/reference_similarity.svg)
+![F4Mix example plot: sample-wise reference similarities](runs/modern/reference_similarity.svg)
 
 ## How it works
 
-Each run is built from four components:
+Each run is built from three statistical components:
 
 - **Targets** are the samples to fit.
 - **Sources** are the reference populations used as model components.
 - **Right populations** define the f4 axes but are not fitted components.
-- **The outgroup** anchors each f4 statistic. The default is `Chimp`, since it
-  does not overlap with human populations.
 
 F4Mix first pools each source population, then computes an f4 profile for every
 target and fits non-negative weights that sum to one.
 
-Each source population needs suitable reference anchors, while independent right
-populations provide the contrast needed to distinguish sources. Source
-individuals are not suitable right-population anchors; poorly chosen anchors can
-make the fitted weights unstable or difficult to interpret.
+The feature builder does not choose a privileged Right base. For every source
+and target it calculates all unordered pairwise contrasts
+`f4(source, target; right_i, right_j)`. It then uses the full joint covariance
+to project that redundant system into an orthonormal `number_of_rights - 1`
+dimensional Helmert basis. Reordering the Right populations can rotate the
+reported feature coordinates, but does not change their contrast space or
+privilege one population in the fit.
+
+All target, source, and pairwise-Right statistics are accumulated together by
+a vectorized block kernel, while jackknife covariance is constructed separately
+for each target to avoid a quadratic cross-target covariance matrix.
+
+The legacy `outgroup` model argument remains accepted so existing run scripts
+continue to work, but it is not loaded or used by the base-free feature builder.
+
+Independent Right populations provide the contrast needed to distinguish
+sources. Source individuals are not suitable Right populations; poorly chosen
+or redundant Rights can make the fitted weights unstable or difficult to
+interpret.
 
 Uncertainty is estimated with a block jackknife using a default block size of
 0.05 cM.
@@ -94,16 +107,16 @@ To plot the saved weights, run:
 python plot_weights.py
 ```
 
-The script reads the example output and writes
-`runs/example/reference_similarity.svg`.
+The script reads the tracked demo output and writes
+`runs/modern/reference_similarity.svg`.
 
 ## Quality checks
 
 `targets.tsv` reports two measures of coverage:
 
 - `target_callable_snps` is the number of callable SNPs for the target.
-- `min_effective_f4_snps` is the smallest usable SNP count across the f4
-  features.
+- `min_effective_f4_snps` is the smallest usable SNP count across the raw
+  source-target and pairwise-Right f4 statistics entering the projection.
 
 The second measure is the one that matters for fitting, since it captures
 missingness in both the target and comparison populations.
@@ -135,7 +148,7 @@ weights.tsv       fitted weight for each source and target
 weights_se.tsv    block-jackknife standard errors
 weights_z.tsv     weight divided by its standard error
 targets.tsv       fit status, optimizer diagnostics, residuals, and SNP coverage
-run.json          run settings, f4 features, and sample counts
+run.json          run settings, feature builder, f4 features, and sample counts
 ```
 
 ## Demo
@@ -143,6 +156,6 @@ run.json          run settings, f4 features, and sample counts
 The included [`run_model.py`](run_model.py) defines the current demonstration
 run.
 
-Generated example files are available in [`runs/example/`](runs/example/), and
+Generated example files are available in [`runs/modern/`](runs/modern/), and
 the SVG plot provides a quick visual summary of the fitted reference
 similarities.

@@ -1,0 +1,162 @@
+target	chi_square	residual_norm	success	iterations	initial_optimizer_success	initial_optimizer_status	initial_optimizer_message	initial_optimizer_nit	initial_optimizer_nfev	refinement_optimizer_success	refinement_optimizer_status	refinement_optimizer_message	refinement_optimizer_nit	refinement_optimizer_nfev	target_callable_snps	min_effective_f4_snps	median_effective_f4_snps	min_effective_f4_blocks
+Czechia_EBA_CordedWare:I6695.AG	27.682055768835344	0.0016675669974978073	True	2	True	0	Optimization terminated successfully	16	16	True	0	Optimization terminated successfully	11	108	208208	49326	49326.0	708
+Czechia_EBA_CordedWare:I6696.AG	17.059966072695264	0.0011738951398068867	False	2	True	0	Optimization terminated successfully	16	16	False	8	Positive directional derivative for linesearch	13	90	211486	50002	50002.0	708
+Czechia_EBA_CordedWare:I7207.AG	35.15041673449319	0.0017071834347289195	False	2	True	0	Optimization terminated successfully	13	14	False	8	Positive directional derivative for linesearch	14	124	194735	47006	47006.0	708
+Czechia_EBA_CordedWare:I7208.AG	16.65108885150097	0.001119013899357029	True	2	True	0	Optimization terminated successfully	17	17	True	0	Optimization terminated successfully	12	113	199799	47677	47677.0	708
+Czechia_EBA_CordedWare:I7209.AG	3.2383178416746583	0.0005946320031693328	False	2	True	0	Optimization terminated successfully	18	19	False	8	Positive directional derivative for linesearch	12	83	216458	50997	50997.0	708
+Czechia_EBA_CordedWare:I7279.AG	16.97913918250308	0.0012334002885922418	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	14	90	158726	40223	40223.0	708
+Czechia_EBA_CordedWare:I7280.AG	5.581600170037636	0.0004371870110248053	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	9	85	195258	47809	47809.0	708
+Czechia_EBA_CordedWare:CAH005.AG	7.9316637984546405	0.0008716514142246265	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	12	110	169997	41623	41623.0	708
+Czechia_EBA_CordedWare:CAH010.AG	1.1966380012642386	0.0004574728341928086	True	2	True	0	Optimization terminated successfully	24	24	True	0	Optimization terminated successfully	10	95	197026	46222	46222.0	708
+Czechia_EBA_CordedWare:DRO001.AG	4.985418704252483	0.0007282845497878502	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	7	67	163436	39128	39128.0	708
+Czechia_EBA_CordedWare:KO1002.AG	2.963075035130899	0.0005418814876721248	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	17	145	243360	54032	54032.0	708
+Czechia_EBA_CordedWare:KON004.AG	11.789944045172223	0.0011718515479157779	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	11	66	192956	45273	45273.0	708
+Czechia_EBA_CordedWare:OHR002.AG	7.719761664348149	0.0006038079311527179	False	2	True	0	Optimization terminated successfully	19	20	False	8	Positive directional derivative for linesearch	15	98	195374	46407	46407.0	708
+Czechia_EBA_CordedWare:PNL001.AG	1.5670419470657246	0.00034631320337721525	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	10	62	157061	38326	38326.0	708
+Czechia_EBA_CordedWare:PNL002.AG	2.4456874762477434	0.0005401344403884101	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	9	85	204317	47000	47000.0	708
+Czechia_EBA_CordedWare:RDV001.AG	2.7203412907960263	0.00038715207809572616	False	2	True	0	Optimization terminated successfully	20	20	False	8	Positive directional derivative for linesearch	16	131	193174	45302	45302.0	708
+Czechia_EBA_CordedWare:TRM003.AG	3.854702711787416	0.0004827708836448668	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	8	71	195446	45865	45865.0	708
+Czechia_EBA_CordedWare:TRM006.AG	3.535225906623973	0.00060066364883897	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	12	71	205373	47561	47561.0	708
+Czechia_EBA_CordedWare:VLI007.AG	9.04112159487591	0.0009639210732664755	True	2	True	0	Optimization terminated successfully	17	17	True	0	Optimization terminated successfully	10	52	203922	47938	47938.0	708
+Czechia_EBA_CordedWare:VLI010.AG	2.0336807769652476	0.0004632097846339807	True	2	True	0	Optimization terminated successfully	21	22	True	0	Optimization terminated successfully	8	77	159895	39596	39596.0	708
+Czechia_EBA_CordedWare:VLI011.AG	14.877493462291637	0.0015267507336542447	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	23	262	167745	41632	41632.0	708
+Czechia_EBA_CordedWare:VLI016.AG	9.383381215021753	0.0012317716502967362	False	2	True	0	Optimization terminated successfully	17	17	False	8	Positive directional derivative for linesearch	14	98	169108	41411	41411.0	708
+Czechia_EBA_CordedWare:VLI017.AG	13.144155596683133	0.0010275098187456095	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	14	100	169395	41759	41759.0	708
+Czechia_EBA_CordedWare:VLI020.AG	10.722199724171883	0.0010564861198935672	False	2	True	0	Optimization terminated successfully	21	22	False	8	Positive directional derivative for linesearch	11	66	158468	39283	39283.0	708
+Czechia_EBA_CordedWare:VLI067.AG	7.672157446908069	0.000840081694383432	True	2	True	0	Optimization terminated successfully	17	17	True	0	Optimization terminated successfully	5	54	180938	44032	44032.0	708
+Czechia_EBA_CordedWare:VLI071.AG	1.9716660948851297	0.00047601691031861644	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	7	68	192506	45000	45000.0	708
+Czechia_EBA_CordedWare:VLI076.AG	6.7634288557342925	0.0010551326605543559	True	2	True	0	Optimization terminated successfully	21	22	True	0	Optimization terminated successfully	16	110	183902	43519	43519.0	708
+Czechia_EBA_CordedWare:VLI092.AG	6.90044249042056	0.0008841401909216092	True	2	True	0	Optimization terminated successfully	21	22	True	0	Optimization terminated successfully	12	78	186684	44730	44730.0	708
+Sardinian:HGDP00666.HO	6.151698204797461	0.00047870027004675637	True	2	True	0	Optimization terminated successfully	24	24	True	0	Optimization terminated successfully	12	111	276084	57131	57131.0	708
+Sardinian:HGDP00667.HO	14.966725553327418	0.0009246332559223568	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	18	156	276528	57235	57235.0	708
+Sardinian:HGDP00668.HO	8.818618389815407	0.000874520921743686	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	11	100	276530	57236	57236.0	708
+Sardinian:HGDP00669.HO	5.787933903400859	0.000385418216713782	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	8	79	276577	57235	57235.0	708
+Sardinian:HGDP00670.HO	7.151811462370096	0.0007121103951529765	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	20	187	276380	57194	57194.0	708
+Sardinian:HGDP00671.HO	5.067750569855058	0.0005071228987947581	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	10	92	276678	57254	57254.0	708
+Sardinian:HGDP00672.HO	7.870434549062203	0.0008039861439554045	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	22	187	276277	57159	57159.0	708
+Sardinian:HGDP00673.HO	5.645118229795285	0.0006600279762887494	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	9	84	276450	57197	57197.0	708
+Sardinian:HGDP00674.HO	3.855800440078279	0.0004510432174572559	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	12	75	276293	57187	57187.0	708
+Orcadian:HGDP00794.HO	7.100779794120447	0.0007711418000887566	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	11	69	276511	57226	57226.0	708
+Orcadian:HGDP00796.HO	14.102164029997487	0.0011442614503608141	False	2	True	0	Optimization terminated successfully	19	19	False	8	Positive directional derivative for linesearch	17	133	275884	57094	57094.0	708
+Orcadian:HGDP00797.HO	4.944124822884527	0.000541691126428736	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	14	101	276571	57231	57231.0	708
+Orcadian:HGDP00798.HO	2.1569836715774073	0.00042830707042817496	True	2	True	0	Optimization terminated successfully	17	17	True	0	Optimization terminated successfully	9	88	276505	57226	57226.0	708
+Orcadian:HGDP00799.HO	33.32311579711389	0.001360744543774135	False	2	True	0	Optimization terminated successfully	16	16	False	8	Positive directional derivative for linesearch	11	77	276036	57121	57121.0	708
+Orcadian:HGDP00800.HO	10.046535578933103	0.0007117436438202258	True	2	True	0	Optimization terminated successfully	14	14	True	0	Optimization terminated successfully	16	123	276419	57196	57196.0	708
+Orcadian:HGDP00802.HO	23.559224216859295	0.0011764760533295546	False	2	True	0	Optimization terminated successfully	15	16	False	8	Positive directional derivative for linesearch	12	80	276324	57199	57199.0	708
+Orcadian:HGDP00803.HO	5.952511280722992	0.0006904290946879694	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	6	51	276194	57153	57153.0	708
+Orcadian:HGDP00805.HO	23.269467286810176	0.001013228913901684	False	2	True	0	Optimization terminated successfully	20	20	False	8	Positive directional derivative for linesearch	14	87	276528	57229	57229.0	708
+Orcadian:HGDP00806.HO	11.245168463196732	0.0008379707684319764	True	2	True	0	Optimization terminated successfully	17	17	True	0	Optimization terminated successfully	9	53	276598	57231	57231.0	708
+Orcadian:HGDP00807.HO	1.4960302298189643	0.00024333758962515693	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	12	72	276637	57248	57248.0	708
+Orcadian:HGDP00808.HO	16.89807953656248	0.0011168729776448035	True	2	True	0	Optimization terminated successfully	15	15	True	0	Optimization terminated successfully	10	65	276614	57243	57243.0	708
+Orcadian:HGDP00810.HO	10.678886942874145	0.0008809644777222882	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	27	261	276425	57206	57206.0	708
+Sardinian:HGDP01062.HO	2.9434581321033377	0.0004381963780428493	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	11	97	276552	57224	57224.0	708
+Sardinian:HGDP01063.HO	3.7084733842940527	0.0004914561907487492	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	8	85	276617	57251	57251.0	708
+Sardinian:HGDP01064.HO	8.050926874836069	0.0008202179411536983	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	12	118	276436	57209	57209.0	708
+Sardinian:HGDP01065.HO	1.0130932450945709	0.00032866049265285524	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	9	82	276642	57252	57252.0	708
+Sardinian:HGDP01066.HO	9.00358569251654	0.0007714823345962742	True	2	True	0	Optimization terminated successfully	19	20	True	0	Optimization terminated successfully	8	76	276651	57251	57251.0	708
+Sardinian:HGDP01067.HO	3.386011649520795	0.0005082704815055913	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	12	77	276158	57150	57150.0	708
+Sardinian:HGDP01068.HO	2.9437197619639175	0.0003550355042920853	False	2	True	0	Optimization terminated successfully	22	23	False	8	Positive directional derivative for linesearch	15	107	276346	57186	57186.0	708
+Sardinian:HGDP01069.HO	0.7096547077920835	0.00021877585474857362	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	11	100	276569	57230	57230.0	708
+Sardinian:HGDP01070.HO	3.239274083328496	0.00039675190064822374	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	9	82	276385	57194	57194.0	708
+Sardinian:HGDP01071.HO	2.116925042542096	0.00046633098373545604	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	14	93	276069	57149	57149.0	708
+Sardinian:HGDP01072.HO	5.306924322326735	0.0003867318976639451	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	12	111	276441	57213	57213.0	708
+Sardinian:HGDP01073.HO	4.624521244474606	0.0006132855732325663	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	6	57	276650	57253	57253.0	708
+Sardinian:HGDP01074.HO	3.09181205421716	0.0004925065985116109	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	8	88	276423	57221	57221.0	708
+Sardinian:HGDP01075.HO	2.04641104977402	0.0004185344515986398	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	13	118	276588	57238	57238.0	708
+Sardinian:HGDP01076.HO	6.456537971481606	0.0004361497743077567	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	8	84	275717	57045	57045.0	708
+Sardinian:HGDP01077.HO	7.23294619583217	0.00047929905308381656	True	2	True	0	Optimization terminated successfully	22	23	True	0	Optimization terminated successfully	9	86	276672	57257	57257.0	708
+Sardinian:HGDP01078.HO	10.819071574079006	0.0006764935485159351	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	15	138	275847	57089	57089.0	708
+Sardinian:HGDP01079.HO	1.0936087218426398	0.00023788895878648349	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	8	76	276655	57248	57248.0	708
+Icelandic:NA15762.HO	15.963066001114868	0.0011282539303991883	False	2	True	0	Optimization terminated successfully	18	18	False	8	Positive directional derivative for linesearch	13	91	276200	57154	57154.0	708
+Greek:NA17373.HO	6.801785939078841	0.000593062662235076	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	8	76	276087	57139	57139.0	708
+Icelandic:NA15755.HO	8.356685138986037	0.0007454210119805711	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	11	64	276514	57230	57230.0	708
+Icelandic:NA15763.HO	11.53611084863376	0.0009157576558788652	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	18	141	276270	57181	57181.0	708
+Icelandic:NA15756.HO	6.3777336762173595	0.000699858082994109	True	2	True	0	Optimization terminated successfully	15	15	True	0	Optimization terminated successfully	10	54	276426	57203	57203.0	708
+Icelandic:NA15764.HO	15.704414942763567	0.0009168646396257577	False	2	True	0	Optimization terminated successfully	14	14	False	8	Positive directional derivative for linesearch	11	63	276367	57202	57202.0	708
+Greek:NA17375.HO	11.377522160109962	0.0009464111712923636	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	9	85	276395	57196	57196.0	708
+Icelandic:NA15757.HO	5.0180433410414915	0.0003898852952996889	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	9	85	276467	57223	57223.0	708
+Icelandic:NA15765.HO	9.346741240582958	0.0008777772049877086	True	2	True	0	Optimization terminated successfully	12	12	True	0	Optimization terminated successfully	9	53	276376	57196	57196.0	708
+Greek:NA17376.HO	0.029152420606960557	4.540752164565814e-05	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	8	80	276334	57189	57189.0	708
+Icelandic:NA15758.HO	6.024788579187911	0.0007079235634922182	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	11	68	276520	57211	57211.0	708
+Icelandic:NA15766.HO	6.850705513006295	0.0006959071562257754	True	2	True	0	Optimization terminated successfully	15	15	True	0	Optimization terminated successfully	9	53	276423	57213	57213.0	708
+Icelandic:NA15759.HO	7.10600945740866	0.0006258940473640257	True	2	True	0	Optimization terminated successfully	16	16	True	0	Optimization terminated successfully	11	63	276498	57220	57220.0	708
+Icelandic:NA15760.HO	13.00108376747785	0.0009768831879993895	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	11	94	276360	57204	57204.0	708
+Icelandic:NA15761.HO	8.948568564874488	0.0008590755701944903	False	2	True	0	Optimization terminated successfully	20	20	False	8	Positive directional derivative for linesearch	11	63	276438	57206	57206.0	708
+Greek:NA17372.HO	4.244212959358801	0.0005673311528539286	True	2	True	0	Optimization terminated successfully	21	22	True	0	Optimization terminated successfully	9	86	276511	57223	57223.0	708
+Sicilian:TP08.HO	3.250521948632589	0.00043758772651877615	True	2	True	0	Optimization terminated successfully	20	21	True	0	Optimization terminated successfully	10	90	275999	57115	57115.0	708
+Greek:GREEKGRALPOP18.HO	3.081258106026605	0.0004119059179188302	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	11	111	275577	57044	57044.0	708
+Sicilian:SR23.HO	17.791762779539713	0.0010224028130180064	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	14	88	276185	57153	57153.0	708
+Sicilian:TP05.HO	9.314746890350515	0.0008094294259401353	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	8	83	276324	57194	57194.0	708
+Sicilian:SR60.HO	7.899847859346939	0.0007464090127388223	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	10	93	276293	57180	57180.0	708
+Sicilian:TP06.HO	4.1480454157977675	0.0006376343066730532	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	12	76	276306	57187	57187.0	708
+Greek:GREEKGRALPOP13.HO	4.917535404712202	0.00048792725071585604	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	12	76	276237	57156	57156.0	708
+Sicilian:TP07.HO	11.51172116807544	0.0009306189880079992	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	12	108	276340	57194	57194.0	708
+Greek:GREEKGRALPOP15.HO	2.664845098659928	0.00043756406366496646	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	6	53	276198	57164	57164.0	708
+Greek:GREEKGRALPOP5.HO	2.1691546535746737	0.0004262367003310385	True	2	True	0	Optimization terminated successfully	24	24	True	0	Optimization terminated successfully	9	86	276237	57174	57174.0	708
+Greek:GREEKGRALPOP9.HO	7.748005535687641	0.0008017484596755148	False	2	True	0	Optimization terminated successfully	21	21	False	8	Positive directional derivative for linesearch	13	94	276233	57169	57169.0	708
+Sicilian:TP04.HO	4.821192329435646	0.0005020638899511299	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	8	83	276371	57191	57191.0	708
+Sicilian:TP25.HO	1.3794245378654888	0.00020755661806853444	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	8	77	276391	57191	57191.0	708
+Greek:GREEKGRALPOP4.HO	4.732255494013383	0.0004504373040911887	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	23	207	276389	57213	57213.0	708
+Sicilian:SR48R.HO	4.643548107962058	0.00032868196520883017	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	8	80	276445	57221	57221.0	708
+Sicilian:SR44.HO	9.294054175754004	0.0005760356072797269	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	9	91	276425	57207	57207.0	708
+Sicilian:SR64.HO	9.108791523369124	0.0008802574481667992	True	2	True	0	Optimization terminated successfully	20	21	True	0	Optimization terminated successfully	14	92	276445	57221	57221.0	708
+Greek:GREEKGRALPOP17.HO	5.745398400861999	0.0004871651418917482	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	9	87	276404	57205	57205.0	708
+Greek:GREEKGRALPOP16.HO	11.290224924874643	0.000852151791523485	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	9	85	276412	57209	57209.0	708
+Greek:GREEKGRALPOP11.HO	1.154126838239686	0.0003079166529654071	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	11	69	276282	57180	57180.0	708
+Greek:GREEKGRALPOP10.HO	17.755268390670704	0.0010563029965424274	True	2	True	0	Optimization terminated successfully	24	24	True	0	Optimization terminated successfully	12	111	276285	57178	57178.0	708
+Greek:GREEKGRALPOP3.HO	2.7551289764994262	0.0004028341659321818	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	12	77	276472	57228	57228.0	708
+Greek:GREEKGRALPOP8.HO	1.794302709081195	0.00034450251471987225	True	2	True	0	Optimization terminated successfully	24	24	True	0	Optimization terminated successfully	9	89	276424	57206	57206.0	708
+Greek:GREEKGRALPOP12.HO	9.557070705832784	0.0006957952907697394	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	13	82	276511	57233	57233.0	708
+Greek:GREEKGRALPOP14.HO	3.8102300182139985	0.0005745446738095187	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	13	83	276486	57211	57211.0	708
+Czechia_EBA_CordedWare:I6696.SG	6.922511293066631	0.0007618896169114252	True	2	True	0	Optimization terminated successfully	16	16	True	0	Optimization terminated successfully	10	56	268361	56265	56265.0	708
+Sardinian:B_Sardinian-3.DG	7.72749133019753	0.00045490253008570854	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	9	92	273064	56581	56581.0	708
+Greek:S_Greek-2.DG	5.0433856061793625	0.0005058784060668786	False	2	True	0	Optimization terminated successfully	21	21	False	8	Positive directional derivative for linesearch	13	103	272932	56568	56568.0	708
+Icelandic:S_Icelandic-1.DG	7.890001734093786	0.0008193777214730796	False	2	True	0	Optimization terminated successfully	20	21	False	8	Positive directional derivative for linesearch	10	56	272897	56554	56554.0	708
+Icelandic:S_Icelandic-2.DG	14.302965792088273	0.0010354412139115443	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	7	79	273085	56599	56599.0	708
+Orcadian:S_Orcadian-1.DG	1.7549676590295527	0.00038585539679829	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	10	94	273080	56596	56596.0	708
+Orcadian:S_Orcadian-2.DG	13.410924315642507	0.0011331851963266126	False	2	True	0	Optimization terminated successfully	19	19	False	8	Positive directional derivative for linesearch	11	63	273016	56599	56599.0	708
+Sardinian:S_Sardinian-1.DG	1.4582598919812637	0.00021939707041722492	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	7	71	272949	56554	56554.0	708
+Sardinian:S_Sardinian-2.DG	12.670786162935144	0.0007221172260714715	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	15	100	272992	56580	56580.0	708
+Sardinian:HGDP00665.DG	4.669527949231002	0.0006158961610087359	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	10	91	264539	54766	54766.0	708
+Sardinian:HGDP00666.DG	5.306577058617775	0.0004787492119403658	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	12	108	266899	55262	55262.0	708
+Sardinian:HGDP00667.DG	18.03797784048209	0.0010532150150530765	False	2	True	0	Optimization terminated successfully	20	20	False	8	Positive directional derivative for linesearch	26	266	266904	55269	55269.0	708
+Sardinian:HGDP00668.DG	8.838599287828062	0.0009344474831427001	True	2	True	0	Optimization terminated successfully	16	16	True	0	Optimization terminated successfully	11	99	266415	55164	55164.0	708
+Sardinian:HGDP00669.DG	6.906596808739156	0.0004161418205342231	True	2	True	0	Optimization terminated successfully	21	22	True	0	Optimization terminated successfully	9	85	266976	55267	55267.0	708
+Sardinian:HGDP00670.DG	7.419182871110543	0.000724720617286562	False	2	True	0	Optimization terminated successfully	16	16	False	8	Positive directional derivative for linesearch	19	148	267415	55369	55369.0	708
+Sardinian:HGDP00671.DG	4.11585393578498	0.0004538530225346477	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	10	89	267303	55334	55334.0	708
+Sardinian:HGDP00672.DG	9.921285092948722	0.0009016695249403053	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	15	129	267095	55300	55300.0	708
+Sardinian:HGDP00673.DG	6.329960946184243	0.0007054512415296207	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	8	86	267011	55286	55286.0	708
+Sardinian:HGDP00674.DG	3.3424018816331995	0.0003886034410229442	False	2	True	0	Optimization terminated successfully	22	22	False	8	Positive directional derivative for linesearch	22	201	267169	55307	55307.0	708
+Orcadian:HGDP00794.DG	7.228507658281894	0.0007646646972372483	False	2	True	0	Optimization terminated successfully	18	19	False	8	Positive directional derivative for linesearch	12	90	266908	55265	55265.0	708
+Orcadian:HGDP00795.DG	6.790355311409158	0.0007723799937703763	False	2	True	0	Optimization terminated successfully	17	17	False	8	Positive directional derivative for linesearch	11	65	267049	55298	55298.0	708
+Orcadian:HGDP00796.DG	16.510308418172766	0.0012484008580656686	False	2	True	0	Optimization terminated successfully	18	18	False	8	Positive directional derivative for linesearch	11	64	267492	55379	55379.0	708
+Orcadian:HGDP00797.DG	6.296509402912836	0.0006098302222356824	False	2	True	0	Optimization terminated successfully	19	19	False	8	Positive directional derivative for linesearch	9	49	266873	55252	55252.0	708
+Orcadian:HGDP00798.DG	2.000150777846491	0.00041674351668659625	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	11	103	267494	55382	55382.0	708
+Orcadian:HGDP00799.DG	29.649275781203063	0.0013375052073431426	True	2	True	0	Optimization terminated successfully	16	16	True	0	Optimization terminated successfully	9	55	267047	55284	55284.0	708
+Orcadian:HGDP00800.DG	12.271575445623242	0.0007845040574295698	True	2	True	0	Optimization terminated successfully	13	13	True	0	Optimization terminated successfully	12	69	267123	55287	55287.0	708
+Orcadian:HGDP00802.DG	27.112138869388918	0.001238556123148288	False	2	True	0	Optimization terminated successfully	14	14	False	8	Positive directional derivative for linesearch	19	172	267086	55297	55297.0	708
+Orcadian:HGDP00803.DG	5.038894008072641	0.0006358387535460774	True	2	True	0	Optimization terminated successfully	17	17	True	0	Optimization terminated successfully	10	57	266770	55239	55239.0	708
+Orcadian:HGDP00804.DG	15.724362871033227	0.0012216144239030975	False	2	True	0	Optimization terminated successfully	20	20	False	8	Positive directional derivative for linesearch	10	54	267230	55322	55322.0	708
+Orcadian:HGDP00805.DG	23.686752508936465	0.001052147925557876	False	2	True	0	Optimization terminated successfully	20	20	False	8	Positive directional derivative for linesearch	15	113	265941	55046	55046.0	708
+Orcadian:HGDP00806.DG	8.075043285975697	0.0007299253145476641	False	2	True	0	Optimization terminated successfully	16	16	False	8	Positive directional derivative for linesearch	9	55	266904	55253	55253.0	708
+Orcadian:HGDP00807.DG	1.7492116976010548	0.00026143677733138685	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	21	183	267457	55371	55371.0	708
+Orcadian:HGDP00808.DG	17.595831746951877	0.00112880612371109	False	2	True	0	Optimization terminated successfully	14	14	False	8	Positive directional derivative for linesearch	9	45	267116	55303	55303.0	708
+Orcadian:HGDP00810.DG	11.886500422647833	0.0009646374407127562	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	25	256	267210	55312	55312.0	708
+Sardinian:HGDP01062.DG	4.75310045919741	0.0005319605185029675	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	14	90	267159	55305	55305.0	708
+Sardinian:HGDP01063.DG	4.201189763224101	0.0005582887458243094	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	7	72	266976	55263	55263.0	708
+Sardinian:HGDP01064.DG	6.591841214596428	0.0007231445087831079	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	13	85	266953	55274	55274.0	708
+Sardinian:HGDP01065.DG	1.522776991327322	0.0003956179043565594	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	12	75	267142	55315	55315.0	708
+Sardinian:HGDP01066.DG	11.001170245790094	0.0008949552915938538	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	10	90	267081	55299	55299.0	708
+Sardinian:HGDP01067.DG	3.5683896125846184	0.0005689374299622742	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	8	76	267236	55319	55319.0	708
+Sardinian:HGDP01068.DG	2.1691628634999165	0.00034849679258692275	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	15	100	267260	55335	55335.0	708
+Sardinian:HGDP01069.DG	0.6813798097476594	0.00016882564966322092	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	10	97	267129	55304	55304.0	708
+Sardinian:HGDP01070.DG	3.5767686676914914	0.0004831504415166775	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	11	94	267256	55333	55333.0	708
+Sardinian:HGDP01071.DG	1.9519750328406447	0.00042648616996537485	True	2	True	0	Optimization terminated successfully	18	18	True	0	Optimization terminated successfully	12	76	267406	55364	55364.0	708
+Sardinian:HGDP01072.DG	4.7214649030459555	0.00036540856831291356	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	12	107	267443	55369	55369.0	708
+Sardinian:HGDP01073.DG	5.69972738387616	0.0006786968280545082	True	2	True	0	Optimization terminated successfully	21	21	True	0	Optimization terminated successfully	11	111	267287	55345	55345.0	708
+Sardinian:HGDP01074.DG	3.4890363284837522	0.000519849256207672	True	2	True	0	Optimization terminated successfully	20	20	True	0	Optimization terminated successfully	9	95	267141	55299	55299.0	708
+Sardinian:HGDP01075.DG	2.5472418463701145	0.0004930667239756966	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	10	96	267188	55311	55311.0	708
+Sardinian:HGDP01076.DG	9.653099608180764	0.0005429679628889376	True	2	True	0	Optimization terminated successfully	19	19	True	0	Optimization terminated successfully	14	92	266362	55144	55144.0	708
+Sardinian:HGDP01077.DG	6.695138342290693	0.000496391591851974	True	2	True	0	Optimization terminated successfully	23	23	True	0	Optimization terminated successfully	13	119	266993	55274	55274.0	708
+Sardinian:HGDP01078.DG	10.508933756007256	0.0006397702371378366	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	12	106	267425	55364	55364.0	708
+Sardinian:HGDP01079.DG	0.7320033976752779	0.0002255037323110307	True	2	True	0	Optimization terminated successfully	22	22	True	0	Optimization terminated successfully	8	78	267448	55372	55372.0	708
