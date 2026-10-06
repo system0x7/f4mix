@@ -208,6 +208,8 @@ def read_snp(path: str | Path, plink: bool = False) -> pd.DataFrame:
     names = ["CHR", "SNP", "cm", "POS", "A1", "A2"] if plink else ["SNP", "CHR", "cm", "POS", "A1", "A2"]
     out = _read_table(path, names)
     out["cm"] = pd.to_numeric(out["cm"], errors="coerce")
+    if plink:
+        out["cm"] /= 100.0
     out["POS"] = pd.to_numeric(out["POS"], errors="coerce")
     return out
 

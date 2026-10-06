@@ -348,20 +348,16 @@ def _jack_stats_per_stat(block_ests: np.ndarray, n_per_block: np.ndarray) -> tup
 def _influence_covariance(influence: np.ndarray, contributes: np.ndarray) -> np.ndarray:
     influence = np.asarray(influence, float)
     contributes = np.asarray(contributes, bool)
-    nstats = influence.shape[0]
-    cov = np.full((nstats, nstats), np.nan, dtype=float)
-    for i in range(nstats):
-        for j in range(i, nstats):
-            keep = (
-                contributes[i]
-                & contributes[j]
-                & np.isfinite(influence[i])
-                & np.isfinite(influence[j])
-            )
-            if int(np.sum(keep)) >= 2:
-                value = float(np.mean(influence[i, keep] * influence[j, keep]))
-                cov[i, j] = cov[j, i] = value
-    return cov
+    if influence.ndim != 2 or influence.shape != contributes.shape:
+        raise ValueError("Influences and contribution masks must be matching matrices")
+    keep = contributes & np.isfinite(influence)
+    blocks = keep.sum(axis=1)
+    valid = (blocks >= 2) & np.all(~contributes | np.isfinite(influence), axis=1)
+    values = np.where(keep, influence, 0.0) / np.sqrt(np.maximum(blocks, 1))[:, None]
+    covariance = values @ values.T
+    covariance[~valid, :] = np.nan
+    covariance[:, ~valid] = np.nan
+    return covariance
 
 
 def _influence_variances(influence: np.ndarray, contributes: np.ndarray) -> np.ndarray:

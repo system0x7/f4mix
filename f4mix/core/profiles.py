@@ -6,7 +6,7 @@ The fitted values are descriptive reference-similarity proportions.
 from __future__ import annotations
 
 from collections import Counter
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from itertools import combinations
 from pathlib import Path
 from typing import Mapping, Sequence
@@ -14,7 +14,9 @@ from typing import Mapping, Sequence
 import numpy as np
 import pandas as pd
 from scipy.optimize import minimize
+from scipy.stats import chi2
 
+from ._admixpy.fstats import _influence_covariance
 from ._admixpy.genotypes import AfData, anygeno_to_afs, get_block_lengths, read_ind
 
 
@@ -128,6 +130,26 @@ class F4ProfileFit:
     target_callable_snps: int | None = None
     effective_f4_snps: np.ndarray | None = None
     effective_f4_blocks: np.ndarray | None = None
+
+    fit_statistic: float = float("nan")
+    fit_pvalue: float = float("nan")
+    pvalue_method: str = "unavailable"
+    fit_status: str = "unavailable"
+    fit_dof: int | None = None
+    fit_alpha: float = 0.05
+    fit_test_optimizer: OptimizerDiagnostics | None = None
+    fit_test_weights: np.ndarray | None = None
+    fit_test_message: str = "Fit test not computed"
+    jackknife_replicates: int = 0
+    jackknife_replicates_used: int = 0
+    source_contrast_rank: int = 0
+    free_weight_parameters: int = 0
+    weights_identifiable: bool = False
+
+    @property
+    def optimizer_success(self) -> bool:
+        """Numerical convergence, independent of the model-fit decision."""
+        return self.success
 
     def to_frame(self) -> pd.DataFrame:
         with np.errstate(divide="ignore", invalid="ignore"):
@@ -433,19 +455,8 @@ def _vectorized_influence_covariance(
     influence: np.ndarray,
     contributes: np.ndarray,
 ) -> np.ndarray:
-    """Pairwise-overlap covariance for a matrix of jackknife influences."""
-
-    influence = np.asarray(influence, float)
-    contributes = np.asarray(contributes, bool)
-    if influence.shape != contributes.shape or influence.ndim != 2:
-        raise ValueError("Influences and contribution masks must be matching matrices")
-    keep = contributes & np.isfinite(influence)
-    values = np.where(keep, influence, 0.0)
-    overlaps = keep.astype(float) @ keep.astype(float).T
-    products = values @ values.T
-    covariance = np.full(products.shape, np.nan, dtype=float)
-    np.divide(products, overlaps, out=covariance, where=overlaps >= 2)
-    return (covariance + covariance.T) / 2.0
+    """Use the shared covariance estimator for aligned physical blocks."""
+    return _influence_covariance(influence, contributes)
 
 
 def _helmert_basis(size: int) -> np.ndarray:
@@ -671,8 +682,8 @@ def _regularized_covariance(
     adjusted = covariance.copy()
     adjusted[np.diag_indices_from(adjusted)] += ridge * scale
     # Numerical covariance estimates can have tiny negative eigenvalues. Make
-    # the matrix positive definite so the Gaussian objective has a valid
-    # inverse and log-determinant.
+    # the matrix positive definite so the quadratic objective has a stable
+    # inverse.
     eigenvalues, eigenvectors = np.linalg.eigh(adjusted)
     floor = max(ridge * scale, np.finfo(float).eps)
     if eigenvalues.min() < floor:
@@ -814,7 +825,7 @@ def _solve_weights(
     return weights, OptimizerDiagnostics.from_result(result)
 
 
-def _solve_full_gaussian_weights(
+def _solve_minimum_q_weights(
     matrix: np.ndarray,
     full_covariance: np.ndarray,
     nfeatures: int,
@@ -825,7 +836,7 @@ def _solve_full_gaussian_weights(
     group_sums: Mapping[str, tuple[Sequence[str], float]] | None,
     sources: Sequence[str],
 ) -> tuple[np.ndarray, OptimizerDiagnostics, bool]:
-    """Optimize the Gaussian residual likelihood on the source simplex."""
+    """Minimize the covariance-aware quadratic residual on the simplex."""
 
     matrix = np.asarray(matrix, float)
     initial = np.asarray(initial, float)
@@ -859,14 +870,11 @@ def _solve_full_gaussian_weights(
             covariance_ridge,
             scale=covariance_scale,
         )
-        sign, logdet = np.linalg.slogdet(covariance)
-        if sign <= 0 or not np.isfinite(logdet):
-            return float("inf")
         try:
             whitened = np.linalg.solve(covariance, residual)
         except np.linalg.LinAlgError:
             return float("inf")
-        value = 0.5 * (float(residual @ whitened) + float(logdet))
+        value = 0.5 * float(residual @ whitened)
         return value if np.isfinite(value) else float("inf")
 
     result = minimize(
@@ -891,6 +899,197 @@ def _solve_full_gaussian_weights(
     return weights, diagnostics, bool(diagnostics.success and np.isfinite(objective(weights)))
 
 
+def _conservative_fit_test(
+    profile: F4ProfileData,
+    *,
+    weights: np.ndarray,
+    optimizer_success: bool,
+    group_sums: Mapping[str, tuple[Sequence[str], float]] | None,
+    covariance_ridge: float,
+) -> dict[str, object]:
+    """Compute the asymptotic chi-square goodness-of-fit p-value."""
+    d = len(profile.features)
+    unavailable: dict[str, object] = {
+        "fit_test_message": "Ancestry optimizer did not converge",
+    }
+    if not optimizer_success:
+        return unavailable
+    covariance = np.asarray(profile.covariance, float)
+    eigenvalues = np.linalg.eigvalsh((covariance + covariance.T) / 2)
+    if (d == 0 or eigenvalues.size == 0 or eigenvalues[-1] <= 0
+            or eigenvalues[0] < -1e-8 * eigenvalues[-1]):
+        return {"fit_test_message": "Joint covariance is zero or not positive semidefinite"}
+    if (profile.effective_f4_blocks is not None
+            and np.min(profile.effective_f4_blocks) < 2):
+        return {"fit_test_message": "Fewer than two effective blocks"}
+
+    groups_and_values = _validate_group_sums(profile.sources, group_sums)
+    if groups_and_values is None:
+        groups = [np.arange(len(weights))]
+        values = [1.0]
+    else:
+        groups, values = groups_and_values
+    uniform = np.zeros(len(weights))
+    for indices, value in zip(groups, values):
+        uniform[indices] = value / len(indices)
+    starts = [weights, uniform]
+    for indices, value in zip(groups, values):
+        if value == 0:
+            continue
+        for index in indices:
+            start = uniform.copy()
+            start[indices] = 0.0
+            start[index] = value
+            starts.append(start)
+
+    initial_covariance = (
+        profile.fit_covariance if profile.fit_covariance is not None
+        else _residual_covariance(covariance, uniform, d)
+    )
+    scale = _covariance_scale(initial_covariance)
+
+    def statistic(w: np.ndarray) -> float:
+        residual = w @ profile.matrix
+        adjusted = _regularized_covariance(
+            _residual_covariance(covariance, w, d), covariance_ridge, scale=scale,
+        )
+        return float(residual @ np.linalg.solve(adjusted, residual))
+
+    candidates = []
+    best_start = min(statistic(start) for start in starts)
+    for start in np.unique(np.asarray(starts), axis=0):
+        try:
+            fitted, diagnostics, solved = _solve_minimum_q_weights(
+                profile.matrix, covariance, d, initial=start,
+                covariance_ridge=covariance_ridge, covariance_scale=scale,
+                group_sums=group_sums, sources=profile.sources,
+            )
+            q = statistic(fitted)
+        except (np.linalg.LinAlgError, FloatingPointError):
+            continue
+        feasible = all(
+            abs(float(fitted[idx].sum()) - mass) <= 1e-7
+            for idx, mass in zip(groups, values)
+        )
+        if solved and feasible and np.isfinite(q) and q >= 0:
+            candidates.append((q, fitted, diagnostics))
+    if not candidates:
+        return {"fit_test_message": "Minimum-Q optimization failed from all starts"}
+    q, fitted, diagnostics = min(candidates, key=lambda candidate: candidate[0])
+    if q > best_start + 1e-7 * max(1.0, best_start):
+        return {"fit_test_message": "Minimum-Q solution is worse than a feasible start"}
+    residual_eigenvalues = np.linalg.eigvalsh(
+        _residual_covariance(covariance, fitted, d)
+    )
+    if residual_eigenvalues[-1] <= 0:
+        return {"fit_test_message": "Residual covariance has no estimated variation"}
+    pvalue = float(chi2.sf(q, d))
+    return {
+        "fit_statistic": q,
+        "fit_pvalue": pvalue,
+        "pvalue_method": "chi2_d_conservative_asymptotic",
+        "fit_status": "rejected" if pvalue < 0.05 else "not rejected",
+        "fit_dof": d,
+        "fit_test_optimizer": diagnostics,
+        "fit_test_weights": fitted,
+        "fit_test_message": (
+            "Multistart minimum-Q approximation; asymptotic calibration assumes "
+            "valid covariance and a global minimum"
+        ),
+    }
+
+
+def _fit_profile_weights(
+    profile: F4ProfileData,
+    *,
+    group_sums: Mapping[str, tuple[Sequence[str], float]] | None,
+    covariance_ridge: float,
+    max_gls_iterations: int,
+    tolerance: float,
+) -> tuple[np.ndarray, np.ndarray, int, bool, OptimizerDiagnostics,
+           OptimizerDiagnostics | None]:
+    """Minimize the covariance-aware residual over valid weights."""
+    # Retain these legacy arguments for callers of the former iterative GLS.
+    _ = max_gls_iterations, tolerance
+    nfeatures = len(profile.features)
+    groups_and_values = _validate_group_sums(profile.sources, group_sums)
+    if groups_and_values is None:
+        groups, masses = [np.arange(len(profile.sources))], [1.0]
+    else:
+        groups, masses = groups_and_values
+    uniform = np.zeros(len(profile.sources))
+    for indices, mass in zip(groups, masses):
+        uniform[indices] = mass / len(indices)
+    initial_covariance = (
+        profile.fit_covariance if profile.fit_covariance is not None
+        else _residual_covariance(profile.covariance, uniform, nfeatures)
+    )
+    scale = _covariance_scale(initial_covariance)
+    precision = _regularized_inverse(initial_covariance, covariance_ridge, scale=scale)
+    initial, initial_optimizer = _solve_weights(
+        profile.matrix, precision, group_sums=group_sums, sources=profile.sources,
+    )
+    starts = [uniform, initial]
+    for indices, mass in zip(groups, masses):
+        if mass == 0:
+            continue
+        for index in indices:
+            start = uniform.copy()
+            start[indices] = 0.0
+            start[index] = mass
+            starts.append(start)
+
+    def evaluate(weights: np.ndarray) -> tuple[float, np.ndarray]:
+        precision = _regularized_inverse(
+            _residual_covariance(profile.covariance, weights, nfeatures),
+            covariance_ridge, scale=scale,
+        )
+        residual = weights @ profile.matrix
+        return float(residual @ precision @ residual), precision
+
+    best = None
+    best_start = min(evaluate(start)[0] for start in starts)
+    for start in starts:
+        weights, diagnostics, solved = _solve_minimum_q_weights(
+            profile.matrix, profile.covariance, nfeatures, initial=start,
+            covariance_ridge=covariance_ridge, covariance_scale=scale,
+            group_sums=group_sums, sources=profile.sources,
+        )
+        q, precision = evaluate(weights)
+        if solved and np.isfinite(q) and (best is None or q < best[0] - 1e-10):
+            best = (q, weights, precision, diagnostics)
+    if best is None:
+        _, precision = evaluate(initial)
+        return initial, precision, len(starts), False, initial_optimizer, None
+    q, weights, precision, diagnostics = best
+    success = q <= best_start + 1e-7 * max(1.0, best_start)
+    return weights, precision, len(starts), success, initial_optimizer, diagnostics
+
+
+def _source_identifiability(
+    profile: F4ProfileData,
+    group_sums: Mapping[str, tuple[Sequence[str], float]] | None,
+) -> tuple[int, int]:
+    """Report whether source weights are identifiable from the mean contrasts."""
+    grouped = _validate_group_sums(profile.sources, group_sums)
+    groups, masses = ([np.arange(len(profile.sources))], [1.0]) if grouped is None else grouped
+    directions = []
+    for indices, mass in zip(groups, masses):
+        if mass == 0:
+            continue
+        directions.extend(profile.matrix[indices[1:]] - profile.matrix[indices[0]])
+    nfree = len(directions)
+    if not nfree:
+        return 0, 0
+    contrasts = np.asarray(directions)
+    # Use the original profile scale as well as its differences, so numerical
+    # cancellation of identical profiles is not mistaken for real information.
+    tolerance = max(float(np.linalg.norm(profile.matrix, ord=2)),
+                    float(np.linalg.norm(contrasts, ord=2))) * 1e-10
+    rank = int(np.linalg.matrix_rank(contrasts, tol=tolerance))
+    return rank, nfree
+
+
 def fit_f4_profiles(
     profile: F4ProfileData,
     *,
@@ -900,87 +1099,47 @@ def fit_f4_profiles(
     tolerance: float = 1e-8,
     jackknife: bool = True,
 ) -> F4ProfileFit:
-    """Fit simplex weights with a full covariance Gaussian refinement."""
+    """Fit simplex weights by multistart minimum quadratic residual."""
 
     profile.validate()
     if covariance_ridge <= 0:
         raise ValueError("covariance_ridge must be positive")
     if max_gls_iterations <= 0:
         raise ValueError("max_gls_iterations must be positive")
-    nfeatures = len(profile.features)
-    precision = (
-        np.eye(nfeatures)
-        if profile.fit_covariance is None
-        else _regularized_inverse(profile.fit_covariance, covariance_ridge)
-    )
-    weights, initial_optimizer = _solve_weights(
-        profile.matrix,
-        precision,
-        group_sums=group_sums,
-        sources=profile.sources,
-    )
-    success = initial_optimizer.success
-    refinement_optimizer = None
-    iterations = 1
-    if profile.fit_covariance is not None:
-        # Full Gaussian refinement: account for both the residual covariance
-        # and its determinant, so noisy source combinations are not rewarded.
-        covariance_scale = _covariance_scale(profile.fit_covariance)
-        revised, refinement_optimizer, solved = _solve_full_gaussian_weights(
-            profile.matrix,
-            profile.covariance,
-            nfeatures,
-            initial=weights,
-            covariance_ridge=covariance_ridge,
-            covariance_scale=covariance_scale,
-            group_sums=group_sums,
-            sources=profile.sources,
+    weights, precision, iterations, success, initial_optimizer, refinement_optimizer = (
+        _fit_profile_weights(
+            profile, group_sums=group_sums, covariance_ridge=covariance_ridge,
+            max_gls_iterations=max_gls_iterations, tolerance=tolerance,
         )
-        success &= solved
-        weights = revised
-        precision = _regularized_inverse(
-            _residual_covariance(profile.covariance, weights, nfeatures),
-            covariance_ridge,
-            scale=covariance_scale,
-        )
-        iterations = 2
-    else:
-        iteration_limit = max_gls_iterations
-        for iterations in range(2, iteration_limit + 1):
-            residual_covariance = _residual_covariance(
-                profile.covariance, weights, nfeatures
-            )
-            precision = _regularized_inverse(residual_covariance, covariance_ridge)
-            revised, refinement_optimizer = _solve_weights(
-                profile.matrix,
-                precision,
-                group_sums=group_sums,
-                sources=profile.sources,
-            )
-            success &= refinement_optimizer.success
-            change = float(np.max(np.abs(revised - weights)))
-            weights = revised
-            if change <= tolerance:
-                break
-
+    )
     residual = weights @ profile.matrix
     chi_square = float(residual @ precision @ residual)
+    rank, nfree = _source_identifiability(profile, group_sums)
+    identifiable = rank == nfree
     standard_errors = np.full(len(weights), np.nan)
+    jackknife_weights: list[np.ndarray] = []
+    jackknife_replicates = 0
     if jackknife and profile.loo is not None and profile.loo.shape[2] >= 2:
-        jackknife_weights: list[np.ndarray] = []
+        jackknife_replicates = profile.loo.shape[2]
         for block in range(profile.loo.shape[2]):
             matrix = profile.loo[:, :, block]
             if not np.isfinite(matrix).all():
                 continue
-            fitted, jackknife_optimizer = _solve_weights(
-                matrix,
-                precision,
-                group_sums=group_sums,
-                sources=profile.sources,
-            )
-            if jackknife_optimizer.success and np.isfinite(fitted).all():
+            try:
+                fitted, _, _, replicate_success, _, _ = _fit_profile_weights(
+                    replace(profile, matrix=matrix, loo=None),
+                    group_sums=group_sums,
+                    covariance_ridge=covariance_ridge,
+                    max_gls_iterations=max_gls_iterations,
+                    tolerance=tolerance,
+                )
+            except (np.linalg.LinAlgError, FloatingPointError):
+                continue
+            if replicate_success and np.isfinite(fitted).all():
                 jackknife_weights.append(fitted)
-        if len(jackknife_weights) >= 2:
+        # Missing replicates change the delete-one jackknife design. Do not
+        # silently calculate an SE from only the successful subset.
+        if success and identifiable and len(jackknife_weights) == jackknife_replicates:
             values = np.asarray(jackknife_weights, float)
             mean = values.mean(axis=0)
             variance = (len(values) - 1) / len(values) * np.sum(
@@ -988,7 +1147,17 @@ def fit_f4_profiles(
             )
             standard_errors = np.sqrt(np.maximum(variance, 0.0))
 
+    test = _conservative_fit_test(
+        profile, weights=weights, optimizer_success=success,
+        group_sums=group_sums, covariance_ridge=covariance_ridge,
+    )
     return F4ProfileFit(
+        **test,
+        source_contrast_rank=rank,
+        free_weight_parameters=nfree,
+        weights_identifiable=identifiable,
+        jackknife_replicates=jackknife_replicates,
+        jackknife_replicates_used=len(jackknife_weights),
         sources=profile.sources,
         weights=weights,
         standard_errors=standard_errors,

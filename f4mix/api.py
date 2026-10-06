@@ -34,6 +34,7 @@ class F4FitConfig:
     chunk_size: int = 250_000
     covariance_ridge: float = 1e-5
     min_effective_f4_snps_warning: int | None = 50_000
+    jackknife_enabled: bool = True
     verbose: bool = True
 
     def as_jsonable(self) -> dict[str, object]:
@@ -63,6 +64,17 @@ class F4FitResult:
         """Return jackknife standard errors in the weights-table layout."""
 
         return self._wide_metric_frame("standard_errors")
+
+    def fit_test_weights_frame(self) -> pd.DataFrame:
+        """Return the minimum-Q weights separately from ancestry estimates."""
+        sources = list(self.config.component_sources)
+        rows = []
+        for target, fit in self.fits.items():
+            weights = fit.fit_test_weights
+            if weights is None:
+                weights = np.full(len(fit.sources), np.nan)
+            rows.append({"target": target, **dict(zip(fit.sources, weights, strict=True))})
+        return pd.DataFrame(rows, columns=["target", *sources])
 
     def weights_z_frame(self) -> pd.DataFrame:
         """Return weight z-scores in the weights-table layout."""
@@ -121,11 +133,25 @@ class F4FitResult:
                 "chi_square": fit.chi_square,
                 "residual_norm": float(np.linalg.norm(fit.residual)),
                 "success": fit.success,
+                "optimizer_success": fit.optimizer_success,
+                "fit_statistic": fit.fit_statistic,
+                "fit_pvalue": fit.fit_pvalue,
+                "pvalue_method": fit.pvalue_method,
+                "fit_status": fit.fit_status,
+                "fit_dof": fit.fit_dof,
+                "fit_alpha": fit.fit_alpha,
+                "fit_test_message": fit.fit_test_message,
+                "jackknife_replicates": fit.jackknife_replicates,
+                "jackknife_replicates_used": fit.jackknife_replicates_used,
                 "iterations": fit.iterations,
+                "source_contrast_rank": fit.source_contrast_rank,
+                "free_weight_parameters": fit.free_weight_parameters,
+                "weights_identifiable": fit.weights_identifiable,
             }
             for prefix, diagnostics in (
                 ("initial_optimizer", fit.initial_optimizer),
                 ("refinement_optimizer", fit.refinement_optimizer),
+                ("fit_test_optimizer", fit.fit_test_optimizer),
             ):
                 row.update(
                     {
@@ -175,6 +201,9 @@ class F4FitResult:
         self.weights_frame().to_csv(output / "weights.tsv", sep="\t", index=False)
         self.weights_se_frame().to_csv(output / "weights_se.tsv", sep="\t", index=False)
         self.weights_z_frame().to_csv(output / "weights_z.tsv", sep="\t", index=False)
+        self.fit_test_weights_frame().to_csv(
+            output / "fit_test_weights.tsv", sep="\t", index=False
+        )
         self.summary_frame().to_csv(output / "targets.tsv", sep="\t", index=False)
         metadata = {
             "config": self.config.as_jsonable(),
@@ -186,6 +215,22 @@ class F4FitResult:
             },
             "targets": len(self.fits),
             "sources": list(self.config.component_sources),
+            "weight_estimator": "multistart_minimum_q",
+            "covariance_estimator": "aligned_block_influence_gram",
+            "block_size_units": "bp" if self.config.blgsize >= 100 else "Morgans",
+            "genetic_map_units": "Morgans (PLINK cM converted on input)",
+            "fit_test": {
+                "method": "chi2_d_conservative_asymptotic",
+                "alpha": 0.05,
+                "degrees_of_freedom": "number of projected f4 features",
+                "optimization": "multistart SLSQP; global minimum not guaranteed",
+            },
+            "jackknife": {
+                "enabled": self.config.jackknife_enabled,
+                "estimator": "same objective as full-data fit",
+                "covariance": "full-data joint covariance held fixed",
+                "incomplete_replicates": "standard errors unavailable",
+            },
         }
         (output / "run.json").write_text(
             json.dumps(metadata, indent=2) + "\n",
@@ -278,7 +323,14 @@ class F4Model:
         *,
         target_populations: Sequence[str] | None = None,
         targets: Mapping[str, Sequence[str]] | None = None,
+        jackknife: bool = True,
     ) -> F4FitResult:
+        """Fit targets, optionally skipping jackknife standard errors.
+
+        Jackknife covariance estimation for the f4 statistics is retained either
+        way; ``jackknife=False`` skips only the per-target refits used for weight
+        standard errors. Fit statistics and p-values are still computed.
+        """
         target_map = _target_map(
             data,
             target_populations=target_populations,
@@ -373,7 +425,7 @@ class F4Model:
             target: fit_f4_profiles(
                 profile,
                 covariance_ridge=self.covariance_ridge,
-                jackknife=True,
+                jackknife=jackknife,
             )
             for target, profile in profiles.items()
         }
@@ -388,6 +440,7 @@ class F4Model:
             chunk_size=self.chunk_size,
             covariance_ridge=self.covariance_ridge,
             min_effective_f4_snps_warning=self.min_effective_f4_snps_warning,
+            jackknife_enabled=bool(jackknife),
             verbose=self.verbose,
         )
         return F4FitResult(
